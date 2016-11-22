@@ -3,7 +3,7 @@ module Nat where
 import Prelude hiding ((+),(*),(-),(<),id)
 import Tip
 
-data Nat = Z | S Nat deriving (Eq,Ord)
+data Nat = Z | S Nat
 
 infixl 6 -
 infixl 6 +
@@ -26,14 +26,14 @@ Z   - _   = Z
 
 (<) :: Nat -> Nat -> Bool
 Z < _     = True
-Z{} < Z   = False
-S{} < Z   = False
+--Z{} < Z   = False
+--S{} < Z   = False
 S n < S m = n < m
 
 (=:=) :: Nat -> Nat -> Bool
 Z   =:= Z   = True
-Z{} =:= S{} = False
-S{} =:= Z{} = False
+--Z{} =:= S{} = False
+--S{} =:= Z{} = False
 S n =:= S m = n =:= m
 
 id :: Nat -> Nat

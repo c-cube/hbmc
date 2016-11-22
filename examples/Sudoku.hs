@@ -7,7 +7,7 @@ import qualified Prelude as P
 -- A
 
 data Cell = C1 | C2 | C3 | C4 | C5 | C6 | C7 | C8 | C9
-  deriving (P.Eq,P.Ord,P.Show)
+  deriving (P.Eq,P.Show)
 
 C1 `eqCell` C1 = True
 C2 `eqCell` C2 = True

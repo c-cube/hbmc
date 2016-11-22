@@ -6,7 +6,8 @@
 -}
 module Definitions where
 
-import Prelude (Eq,Ord,Show(..),(.),succ,iterate,(!!),fmap,return,Bool(..))
+-- import Prelude (Eq,Ord,Show(..),(.),succ,iterate,(!!),fmap,return,Bool(..))
+import Prelude hiding ((+), (*), length, not, (<), (<=), (++), (||), (&&), otherwise)
 import Tip
 
 -- Booleans
@@ -24,14 +25,9 @@ not False = True
 
 -- Nats
 
-data Nat = S Nat | Z deriving (Eq,Ord)
+data Nat = S Nat | Z
 
-instance Show Nat where
-    show = show . wosh
-      where
-        wosh Z = 0
-        wosh (S n) = succ (wosh n)
-
+succ Z = S Z
 
 {-
 instance Partial Nat where
@@ -56,16 +52,16 @@ S x `eqNat` S y = x `eqNat` y
 x /= y = not (x `eqNat` y)
 
 (<) :: Nat -> Nat -> Bool
-Z{}   < Z   = False
-S{}   < Z   = False
+--Z{}   < Z   = False
+--S{}   < Z   = False
 Z   < _   = True
 S x < S y = x < y
 
 
 (<=) :: Nat -> Nat -> Bool
 Z   <= _   = True
-Z{}   <= Z   = False
-S{}   <= Z   = False
+--Z{}   <= Z   = False
+--S{}   <= Z   = False
 S x <= S y = x <= y
 
 one, zero :: Nat
@@ -118,8 +114,8 @@ length (_:xs) = S (length xs)
 
 drop :: Nat -> [a] -> [a]
 drop Z     xs     = xs
-drop Z{}   []     = []
-drop S{}   []     = []
+--drop Z{}   []     = []
+--drop S{}   []     = []
 drop (S x) (_:xs) = drop x xs
 
 rev :: [a] -> [a]
@@ -140,8 +136,8 @@ qrevflat (xs:xss)     acc = qrevflat xss (rev xs ++ acc)
 
 rotate :: Nat -> [a] -> [a]
 rotate Z     xs     = xs
-rotate Z{}   []     = []
-rotate S{}   []     = []
+--rotate Z{}   []     = []
+--rotate S{}   []     = []
 rotate (S n) (x:xs) = rotate n (xs ++ [x])
 
 elem :: Nat -> [Nat] -> Bool

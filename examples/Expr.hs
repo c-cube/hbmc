@@ -1,9 +1,7 @@
 module Expr where
 
 import Tip.Prelude
-import qualified Prelude as P
-import qualified Test.QuickCheck as Q
-import qualified Control.Monad as M
+import Prelude hiding ((==),(&&),(-),(+),(*),div,not)
 
 type V = Nat
 
@@ -14,7 +12,6 @@ data E
   | Div E E
   | Eq E E
   | V V
- deriving ( P.Show )
 
 eqE :: E -> E -> Bool
 eqE (N a)       (N b)       = a == b
@@ -158,30 +155,4 @@ isVar (V _) = True
 isVar _     = False
 
 prop4 st a = (eval st a == eval st (simp4 a)) === True
-
----
-
-main = quickCheck prop3
-
-instance Q.Arbitrary Nat where
-  arbitrary =
-    do x <- Q.choose (0,10)
-       P.return (conv (P.abs (x :: P.Int)))
-   where
-    conv 0 = Z
-    conv n = S (conv (n P.- 1))
-
-instance Q.Arbitrary E where
-  arbitrary = Q.sized arbE
-   where
-    arbE n = frequency
-      [ (n, M.liftM2 Add arb2 arb2)
-      , (n, M.liftM2 Mul arb2 arb2)
-      , (n, M.liftM2 Eq  arb2 arb2)
-      , (n, M.liftM2 Div arb2 arb2)
-      , (1, M.liftM  V   Q.arbitrary)
-      , (1, M.liftM  N   Q.arbitrary)
-      ]
-     where
-      arb2 = arbE (n `P.div` 2)
 

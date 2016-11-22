@@ -8,13 +8,13 @@ import Tip
 []     ++ ys = ys
 
 data T = A | B
- deriving (Eq,Ord,Show)
+ deriving (Eq,Show)
 
 data C = C P P
- deriving (Eq,Ord,Show)
+ deriving (Eq,Show)
 
 data P = AP P | BP P | PA | PB | PE
- deriving (Eq,Ord,Show)
+ deriving (Eq,Show)
 
 linC :: C -> [T]
 linC (C p q) = linP p ++ linP q

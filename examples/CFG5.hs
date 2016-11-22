@@ -8,11 +8,8 @@ import Tip
 []     ++ ys = ys
 
 data E = E :+: E | E :*: E | EX | EY
-  deriving (Eq,Ord,Show)
-
 
 data Tok = C | D | X | Y | Plus | Mul
-  deriving (Eq,Ord,Show)
 
 lin :: E -> [Tok]
 lin (a :+: b) = linTerm a ++ [Plus] ++ linTerm b

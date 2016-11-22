@@ -19,7 +19,7 @@ data R a
  deriving ( Eq, Show )
 
 data T = A | B | C
- deriving ( Eq, Ord, Show )
+ deriving ( Eq, Show )
 
 (.+.), (.&.), (.>.) :: R T -> R T -> R T
 -- a .+. b = a :+: b

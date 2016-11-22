@@ -1,7 +1,7 @@
 {-# LANGUAGE CPP #-}
 module Mergesort(module Mergesort,module Nat) where
 
-import Prelude (Bool(..),undefined,Ordering(..), (&&), (||), otherwise, not, fmap, Eq(..), Ord, fst, snd)
+import Prelude (Bool(..),(&&), (||), otherwise, not, Eq(..), fst, snd)
 
 import Tip
 

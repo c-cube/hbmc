@@ -3,14 +3,16 @@ module Turing where
 import Tip
 -- import Test.LazySmallCheck hiding ((==>))
 
+data Either a b = Left a | Right b
+
 data A = O | A | B
- deriving (Eq,Ord,Show)
+ deriving (Eq,Show)
 
 -- instance Serial A where
 --   series = cons0 O \/ cons0 A \/ cons0 B
 
 data Action = Lft Nat | Rgt Nat | Stp
- deriving (Eq,Ord,Show)
+ deriving (Eq,Show)
 
 -- instance Serial Action where
 --   series = cons1 Lft \/ cons1 Rgt \/ cons0 Stp
@@ -20,7 +22,7 @@ type Q = [((Nat,A),(A,Action))]
 type State = (Nat,[A],[A])
 
 data Nat = Zero | Succ Nat
- deriving (Eq,Ord,Show)
+ deriving (Eq,Show)
 
 -- instance Serial Nat where
 --   series = cons0 Zero \/ cons1 Succ

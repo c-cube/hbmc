@@ -9,7 +9,7 @@ data R a
   | R a :+: R a
   | R a :>: R a
   | Star (R a)
- deriving (Eq, Ord, Show)
+ deriving (Eq, Show)
 
 infixl 7 .+.
 infixl 8 .>.
@@ -37,7 +37,7 @@ epsR p | eps p     = Eps
        | otherwise = Nil
 
 data T = A | B | C
- deriving (Eq, Ord, Show)
+ deriving (Eq, Show)
 
 eqT :: T -> T -> Bool
 A `eqT` A = True
