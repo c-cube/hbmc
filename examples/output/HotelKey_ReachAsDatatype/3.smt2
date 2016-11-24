@@ -327,5 +327,6 @@
       (case (Just2 s)
         (=> (and (ind y x) (and (!25 (safe s) y) (!25 (!24 (isin s) y) z)))
           (==? (!22 (owns s) y) (Just z))))))
-(assert-not (forall ((r Nat) (g Nat) (q Reach)) (psafe Z r g q)))
+(assert-not
+  (forall ((r Nat) (g Nat) (q Reach)) (psafe (S (S (S Z))) r g q)))
 (check-sat)

@@ -3,8 +3,9 @@
 HS_FILES = $(wildcard *.hs)
 POLY_FILES = $(addprefix poly/,$(subst .hs,.smt2,$(HS_FILES)))
 
+all: all_smbc all_hbmc
 
-all: poly $(POLY_FILES)
+all_smbc: poly $(POLY_FILES)
 	mkdir -p output
 	for i in poly/*.smt2 ; do \
 	  mkdir -p output/`basename $$i .smt2` ; \
@@ -12,8 +13,16 @@ all: poly $(POLY_FILES)
 	  tip --type-skolem-conjecture --monomorphise --split-conjecture "$$i" output/`basename $$i .smt2` ; \
 	done
 
+all_hbmc: poly $(POLY_FILES)
+	mkdir -p hbmc_output
+	for i in poly/*.smt2 ; do \
+	  mkdir -p hbmc_output/`basename $$i .smt2` ; \
+	  echo "convert $$i" ; \
+	  tip --split-conjecture "$$i" hbmc_output/`basename $$i .smt2` ; \
+	done
+
 clean:
-	rm -rf output poly *.dyn* *.hi *.o
+	rm -rf output hbmc_output poly *.dyn* *.hi *.o
 
 poly:
 	mkdir -p poly

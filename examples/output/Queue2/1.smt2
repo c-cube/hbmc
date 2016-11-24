@@ -67,13 +67,13 @@
       (case (Cons y xs) (S (length xs)))))
 (define-fun-rec
   last
-    ((x list)) Maybe3
+    ((x list2)) Maybe4
     (match x
-      (case Nil Nothing3)
-      (case (Cons y z)
+      (case Nil2 Nothing4)
+      (case (Cons2 y z)
         (match z
-          (case Nil (Just3 y))
-          (case (Cons x2 x3) (last z))))))
+          (case Nil2 (Just4 y))
+          (case (Cons2 x2 x3) (last z))))))
 (define-fun-rec
   init2
     ((x list2)) list2
@@ -94,10 +94,10 @@
           (case (Cons x2 x3) (Cons y (init z)))))))
 (define-fun
   head
-    ((x list2)) Maybe4
+    ((x list)) Maybe3
     (match x
-      (case Nil2 Nothing4)
-      (case (Cons2 y z) (Just4 y))))
+      (case Nil Nothing3)
+      (case (Cons y z) (Just3 y))))
 (define-fun-rec
   half
     ((x Nat)) Nat
@@ -109,37 +109,37 @@
           (case (S n) (S (half n)))))))
 (define-fun
   fstR
-    ((x Q)) Maybe3
-    (match x
-      (case (Q2 y z)
-        (let
-          ((x2
-              (match z
-                (case Nil Nothing3)
-                (case (Cons y2 x3) (Just3 y2)))))
-          (match y
-            (case Nil x2)
-            (case (Cons x4 x5)
-              (match x5
-                (case Nil
-                  (match z
-                    (case Nil (Just3 x4))
-                    (case (Cons x6 x7) x2)))
-                (case (Cons x8 x9) x2))))))))
-(define-fun
-  fstL
     ((x Q3)) Maybe4
     (match x
       (case (Q22 y z)
+        (let
+          ((x2
+              (match z
+                (case Nil2 Nothing4)
+                (case (Cons2 y2 x3) (Just4 y2)))))
+          (match y
+            (case Nil2 x2)
+            (case (Cons2 x4 x5)
+              (match x5
+                (case Nil2
+                  (match z
+                    (case Nil2 (Just4 x4))
+                    (case (Cons2 x6 x7) x2)))
+                (case (Cons2 x8 x9) x2))))))))
+(define-fun
+  fstL
+    ((x Q)) Maybe3
+    (match x
+      (case (Q2 y z)
         (match y
-          (case Nil2
+          (case Nil
             (match z
-              (case Nil2 Nothing4)
-              (case (Cons2 y2 x2)
+              (case Nil Nothing3)
+              (case (Cons y2 x2)
                 (match x2
-                  (case Nil2 (Just4 y2))
-                  (case (Cons2 x3 x4) Nothing4)))))
-          (case (Cons2 x5 x6) (Just4 x5))))))
+                  (case Nil (Just3 y2))
+                  (case (Cons x3 x4) Nothing3)))))
+          (case (Cons x5 x6) (Just3 x5))))))
 (define-fun
   fromMaybe2
     ((x Q3) (y Maybe2)) Q3
@@ -377,5 +377,5 @@
       (case (DeqR e4) (let ((r (queue e4))) (fromMaybe r (deqR r))))
       (case (App a6 b2) (+++ (queue a6) (queue b2)))))
 (assert-not
-  (forall ((e E2)) (= (fstL (queue2 e)) (head (list23 e)))))
+  (forall ((e E2)) (= (fstR (queue2 e)) (last (list23 e)))))
 (check-sat)

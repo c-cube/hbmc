@@ -26,7 +26,14 @@
       (case Z y)
       (case (S n) (S (plus n y)))))
 (define-fun-rec
-  petersen
+  petersen3
+    ((x Nat) (y list6)) list2
+    (match y
+      (case Nil5 Nil4)
+      (case (Cons5 z x2)
+        (Cons4 (Pair23 z (plus x z)) (petersen3 x x2)))))
+(define-fun-rec
+  petersen2
     ((x Nat) (y list2)) list
     (match y
       (case Nil4 Nil)
@@ -34,7 +41,13 @@
         (match z
           (case (Pair23 u v)
             (Cons (Cons4 z (Cons4 (Pair23 (plus x u) (plus x v)) Nil4))
-              (petersen x x2)))))))
+              (petersen2 x x2)))))))
+(define-fun-rec
+  petersen
+    ((x list6)) list2
+    (match x
+      (case Nil5 Nil4)
+      (case (Cons5 y z) (Cons4 (Pair23 y (S y)) (petersen z)))))
 (define-fun-rec
   or2
     ((x list7)) Bool
@@ -68,11 +81,11 @@
           (case Z true)
           (case (S n) (lt n z))))))
 (define-fun-rec
-  prop_d5
+  prop_p5
     ((x list6)) list7
     (match x
       (case Nil5 Nil7)
-      (case (Cons5 y z) (Cons7 (lt y (S (S (S Z)))) (prop_d5 z)))))
+      (case (Cons5 y z) (Cons7 (lt y (S (S (S Z)))) (prop_p5 z)))))
 (define-fun-rec
   length2
     ((x list6)) Nat
@@ -201,7 +214,7 @@
                     (and (unique x4)
                       (equal (length2 x) (S (S (maximum (max2 u v) vs))))))))))))))
 (define-fun-rec
-  dodeca6
+  dodeca4
     ((x Nat) (y list6)) list2
     (match y
       (case Nil5 Nil4)
@@ -209,22 +222,6 @@
         (Cons4
           (Pair23 (plus x (plus x (plus x z)))
             (plus x (plus x (plus x (S z)))))
-          (dodeca6 x x2)))))
-(define-fun-rec
-  dodeca5
-    ((x Nat) (y list6)) list2
-    (match y
-      (case Nil5 Nil4)
-      (case (Cons5 z x2)
-        (Cons4 (Pair23 (plus x (plus x z)) (plus x (plus x (plus x z))))
-          (dodeca5 x x2)))))
-(define-fun-rec
-  dodeca4
-    ((x Nat) (y list6)) list2
-    (match y
-      (case Nil5 Nil4)
-      (case (Cons5 z x2)
-        (Cons4 (Pair23 (plus x (S z)) (plus x (plus x z)))
           (dodeca4 x x2)))))
 (define-fun-rec
   dodeca3
@@ -232,19 +229,23 @@
     (match y
       (case Nil5 Nil4)
       (case (Cons5 z x2)
-        (Cons4 (Pair23 (plus x z) (plus x (plus x z))) (dodeca3 x x2)))))
+        (Cons4 (Pair23 (plus x (plus x z)) (plus x (plus x (plus x z))))
+          (dodeca3 x x2)))))
 (define-fun-rec
   dodeca2
     ((x Nat) (y list6)) list2
     (match y
       (case Nil5 Nil4)
-      (case (Cons5 z x2) (Cons4 (Pair23 z (plus x z)) (dodeca2 x x2)))))
+      (case (Cons5 z x2)
+        (Cons4 (Pair23 (plus x (S z)) (plus x (plus x z)))
+          (dodeca2 x x2)))))
 (define-fun-rec
   dodeca
-    ((x list6)) list2
-    (match x
+    ((x Nat) (y list6)) list2
+    (match y
       (case Nil5 Nil4)
-      (case (Cons5 y z) (Cons4 (Pair23 y (S y)) (dodeca z)))))
+      (case (Cons5 z x2)
+        (Cons4 (Pair23 (plus x z) (plus x (plus x z))) (dodeca x x2)))))
 (define-fun-rec
   colouring2
     ((a list6) (x list2)) list7
@@ -369,15 +370,19 @@
 (define-fun
   colouring ((x list2) (y list6)) Bool (and2 (colouring2 y x)))
 (assert-not
-  (forall ((a list6))
-    (or
-      (not
-        (colouring
-          (let ((pn (S (S (S (S (S (S (S (S Z))))))))))
-            (append
-              (concat2
-                (petersen (S pn) (Cons4 (Pair23 pn Z) (dodeca (enumFromTo Z pn)))))
-              (dodeca2 (S pn) (enumFromTo Z (S pn)))))
-          a))
-      (not (and2 (prop_d5 a))))))
+  (forall ((q list6))
+    (not
+      (tour q
+        (let ((pn (S (S (S (S Z))))))
+          (append (Cons4 (Pair23 pn Z) (petersen (enumFromTo Z pn)))
+            (append (petersen3 (S pn) (enumFromTo Z (S pn)))
+              (append (dodeca (S pn) (enumFromTo Z (S pn)))
+                (append
+                  (Cons4 (Pair23 (S pn) (plus (S pn) (plus (S pn) pn)))
+                    (dodeca2 (S pn) (enumFromTo Z pn)))
+                  (append (dodeca3 (S pn) (enumFromTo Z (S pn)))
+                    (Cons4
+                      (Pair23 (plus (S pn) (plus (S pn) (plus (S pn) pn)))
+                        (plus (S pn) (plus (S pn) (S pn))))
+                      (dodeca4 (S pn) (enumFromTo Z pn)))))))))))))
 (check-sat)

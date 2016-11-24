@@ -328,5 +328,5 @@
         (=> (and (ind y x) (and (!25 (safe s) y) (!25 (!24 (isin s) y) z)))
           (==? (!22 (owns s) y) (Just z))))))
 (assert-not
-  (forall ((dom Nat) (r Nat) (g Nat) (q Reach)) (psafe dom r g q)))
+  (forall ((r Nat) (g Nat) (q Reach)) (psafe (S Z) r g q)))
 (check-sat)
