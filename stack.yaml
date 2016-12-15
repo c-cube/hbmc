@@ -6,7 +6,8 @@ packages:
     commit: b53435e8bb2e7fe0a9fbd485aa974cf23e51b9f3
   subdirs:
     - tip-lib/
-    - tip-haskell-frontend
+    - tip-haskell-frontend/
+    - tip-prelude/
 
 extra-deps:
 - genifunctors-0.3
